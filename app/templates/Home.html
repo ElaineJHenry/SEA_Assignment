@@ -1,0 +1,6 @@
+{% extends "Base.html" %}
+
+{% block content %}
+    <h1>Hi, {{current_user.username}}!</h1>
+    <p>You have the following role: {{current_user.role}}</p>
+{% endblock %}

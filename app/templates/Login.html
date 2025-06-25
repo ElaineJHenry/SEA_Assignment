@@ -1,0 +1,25 @@
+{% extends "Base.html" %}
+
+{% block content %}
+<form method="post" action="/login">
+<div class="row justify-content-md-center">
+    <div class="col-lg-4 mt-5">
+        {{form.hidden_tag()}}
+        {{form.username.label}}
+        {{form.username(class_="form-control mb-3")}}
+
+        {{form.password.label}}
+        {{form.password(class_="form-control mb-3")}}
+        <p id="errorText">
+
+        </p>
+    </div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-2 text-center">
+        {{form.submit(class_="btn btn-primary w-100 mb-2")}}
+        <a href="{{url_for('register')}}">Register</a>
+    </div>
+</div>
+</form>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "Base.html" %}
+
+{% block content %}
+            <form method="post" action="/register">
+                <div class="row justify-content-md-center">
+                    <div class="col-lg-4 mt-5">
+                        <label for="Username">Username</label>
+                        <input id="Username" class="form-control mb-3">
+                        <label for="Password">Password</label>
+                        <input type="password" id="Password" class="form-control mb-3">
+                        <label for="PasswordConfirm">Confirm Password</label>
+                        <input type="password" id="PasswordConfirm" class="form-control mb-3">
+                        <p id="errorText">
+            
+                        </p>
+                    </div>
+                </div>
+            </form>
+            <div class="row justify-content-md-center">
+                <div class="col-lg-2 text-center">
+                    <button type="submit" class="btn btn-primary w-100 mb-2">Register</button>
+                    <a href="{{ url_for('login')}}">Back to Login</a>
+                </div>
+            </div>
+{% endblock %}
