@@ -1,0 +1,45 @@
+{% extends "Base.html" %}
+
+{% block content %}
+<form method="post" action="/add_book">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-4 mt-5">
+            {{form.hidden_tag()}}
+            {{form.name.label}}
+            {% for error in form.name.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+            {{form.name(class_="form-control mb-3")}}
+
+            {{form.author.label}}
+            {% for error in form.author.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+            {{form.author(class_="form-select mb-3")}}
+
+            {{form.release.label}}
+            {% for error in form.release.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+            {{form.release(class_="form-control mb-3")}}
+
+            {{form.genre.label}}
+            {% for error in form.genre.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+            {{form.genre(class_="form-control mb-3")}}
+
+            {{form.pages.label}}
+            {% for error in form.pages.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+            {{form.pages(class_="form-control mb-3")}}
+        </div>
+    </div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-2 text-center">
+        {{form.submit(class_="btn btn-primary w-100 mb-2")}}
+    </div>
+</div>
+</form>
+{% endblock %}

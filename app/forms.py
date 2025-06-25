@@ -28,8 +28,8 @@ class AuthorForm(FlaskForm):
     age = IntegerField('Age', validators=[DataRequired(), NumberRange(min=0, max=150)])
     submit = SubmitField('Submit')
 
-class NewBookForm(FlaskForm):
-    author = IntegerField('Author', validators=[DataRequired()])
+class BookForm(FlaskForm):
+    author = SelectField('Author', validators=[DataRequired()], choices=[])
     name = StringField('Name', validators=[DataRequired(), Length(max = 64)])
     release = DateField('Release Date', validators=[DataRequired()])
     genre = StringField('Genre', validators=[DataRequired(), Length(max = 64)])

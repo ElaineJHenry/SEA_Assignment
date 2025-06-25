@@ -27,14 +27,15 @@ class Author(db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(64))
     age: so.Mapped[int] = so.mapped_column()
 
-    books: so.WriteOnlyMapped['Book'] = so.relationship(back_populates='author', cascade="all,delete")
+    books: so.WriteOnlyMapped['Book'] = so.relationship(back_populates='author')
 
     def __repr__(self):
         return '<Author {}>'.format(self.name)
     
     def authored_books(self):
         return (sa.select(Book)
-                .join(Book.author))
+                .join(Book.author)
+                .where(Book.author_id == self.author_id))
 
 
 class Book(db.Model):
