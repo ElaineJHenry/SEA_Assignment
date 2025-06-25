@@ -2,7 +2,7 @@ from datetime import date
 from typing import Optional
 import sqlalchemy as sa
 import sqlalchemy.orm as so
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 from flask_login import UserMixin
 from app import db, login
 
@@ -14,9 +14,6 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
-    
-    def set_password(self, password):
-        self.password = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password, password)

@@ -2,24 +2,27 @@
 
 {% block content %}
 <form method="post" action="/login">
-<div class="row justify-content-md-center">
-    <div class="col-lg-4 mt-5">
-        {{form.hidden_tag()}}
-        {{form.username.label}}
-        {{form.username(class_="form-control mb-3")}}
+    <div class="row justify-content-md-center">
+        <div class="col-lg-4 mt-5">
+            {{form.hidden_tag()}}
+            {{form.username.label}}
+            {% for error in form.username.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+            {{form.username(class_="form-control mb-3")}}
 
-        {{form.password.label}}
-        {{form.password(class_="form-control mb-3")}}
-        <p id="errorText">
-
-        </p>
+            {{form.password.label}}
+            {% for error in form.password.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+            {{form.password(class_="form-control mb-3")}}
+        </div>
     </div>
-</div>
-<div class="row justify-content-md-center">
-    <div class="col-lg-2 text-center">
-        {{form.submit(class_="btn btn-primary w-100 mb-2")}}
-        <a href="{{url_for('register')}}">Register</a>
+    <div class="row justify-content-md-center">
+        <div class="col-lg-2 text-center">
+            {{form.submit(class_="btn btn-primary w-100 mb-2")}}
+            <a href="{{url_for('register')}}">Register</a>
+        </div>
     </div>
-</div>
 </form>
 {% endblock %}

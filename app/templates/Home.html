@@ -3,4 +3,9 @@
 {% block content %}
     <h1>Hi, {{current_user.username}}!</h1>
     <p>You have the following role: {{current_user.role}}</p>
+    {% if current_user.role == 'Admin' %}
+    <p>You will be able to create, read, update, and delete data.</p>
+    {% else %}
+    <p>You will be able to create, read and update data.</p>
+    {% endif %}
 {% endblock %}
