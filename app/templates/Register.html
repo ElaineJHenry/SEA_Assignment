@@ -11,6 +11,12 @@
             {% endfor %}
             {{form.username(class_="form-control mb-3")}}
 
+            {{form.role.label}}
+            {% for error in form.role.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+            {{form.role(class_="form-select mb-3")}}
+
             {{form.password.label}}
             {% for error in form.password.errors %}
             <span style="color: red;">{{ error }}</span>

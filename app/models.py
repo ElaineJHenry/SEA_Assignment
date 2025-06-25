@@ -27,8 +27,15 @@ class Author(db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(64))
     age: so.Mapped[int] = so.mapped_column()
 
+    books: so.WriteOnlyMapped['Book'] = so.relationship(back_populates='author', cascade="all,delete")
+
     def __repr__(self):
         return '<Author {}>'.format(self.name)
+    
+    def authored_books(self):
+        return (sa.select(Book)
+                .join(Book.author))
+
 
 class Book(db.Model):
     book_id: so.Mapped[int] = so.mapped_column(primary_key=True)
@@ -37,6 +44,8 @@ class Book(db.Model):
     release_date: so.Mapped[date] = so.mapped_column()
     genre: so.Mapped[str] = so.mapped_column(sa.String(64))
     pages: so.Mapped[int] = so.mapped_column()
+
+    author: so.Mapped[Author] = so.relationship(back_populates='books')
 
     def __repr__(self):
         return '<Book {}>'.format(self.name)

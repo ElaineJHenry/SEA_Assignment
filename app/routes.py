@@ -4,11 +4,10 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash
 from urllib.parse import urlsplit
 import sqlalchemy as sa
-from app.models import User
-from app.forms import LoginForm, RegistrationForm
+from app.models import User, Author, Book
+from app.forms import LoginForm, RegistrationForm, AuthorForm, NewBookForm
 
-"""User Management"""
-
+"""Login and Registration"""
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -39,7 +38,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         passwordHash = generate_password_hash(form.password.data)
-        user = User(username=form.username.data, password=passwordHash, role='User')
+        user = User(username=form.username.data, password=passwordHash, role=form.role.data)
         db.session.add(user)
         db.session.commit()
         flash('User registered successfully, please log in.')
@@ -51,4 +50,76 @@ def register():
 @app.route("/home")
 @login_required
 def home():
-    return render_template("Home.html", title='Home')                                                 
+    return render_template("Home.html", title='Home')
+
+"""Authors"""
+@app.route("/authors") 
+@login_required
+def authors():
+    authors = db.session.scalars(sa.select(Author)).all()
+    return render_template("Authors/Authors.html", title='Authors', authors=authors)
+
+@app.route("/add_author", methods=['GET','POST'])
+@login_required
+def add_author():
+    form = AuthorForm()
+    if form.validate_on_submit():
+        author = Author(name=form.name.data, age=form.age.data)
+        db.session.add(author)
+        db.session.commit()
+        flash('Author added to the database.')
+        return redirect(url_for('authors'))
+    return render_template("Authors/Add.html", title='Add Author', form=form)
+
+@app.route("/view_author/<id>")
+@login_required
+def view_author(id):
+    author = db.first_or_404(sa.select(Author).where(Author.author_id == id))
+    books = db.session.scalars(author.authored_books()).all()
+    return render_template("Authors/View.html", title="Author Details", author=author, books=books)
+
+@app.route("/edit_author/<id>", methods=['GET','POST'])
+@login_required
+def edit_author(id):
+    form = AuthorForm()
+    if form.validate_on_submit():
+        cmd = sa.update(Author).where(Author.author_id == id).values(name=form.name.data, age=form.age.data)
+        db.session.execute(cmd)
+        db.session.commit()
+        flash('Author added to the database.')
+        return redirect(url_for('authors'))
+    elif request.method == 'GET':
+        author = db.first_or_404(sa.select(Author).where(Author.author_id == id))
+        form.name.data = author.name
+        form.age.data = author.age
+    return render_template("Authors/Edit.html", title='Edit Author', form=form, id=id)
+
+@app.route("/delete_author/<id>")
+@login_required
+def delete_author(id):
+    cmd = sa.delete(Author).where(Author.author_id == id)
+    db.session.execute(cmd)
+    db.session.commit()
+    return redirect(url_for('authors'))
+
+"""Books"""
+@app.route("/books") 
+@login_required
+def books():
+    books = db.session.scalars(sa.select(Book)).all()
+    return render_template("Books/Books.html", books=books)   
+
+@app.route("/add_book")
+@login_required
+def add_book():
+    return "Hello, World"
+
+@app.route("/edit_book")
+@login_required
+def edit_book():
+    return "Hello, World"
+
+@app.route("/delete_book")
+@login_required
+def delete_book():
+    return "Hello, World"                                     

@@ -15,7 +15,16 @@
             {% if current_user.is_anonymous %}
             <p></p>
             {% else %}
-            <div class="col-lg-11"></div>
+            <div class="col-lg-8"></div>
+            <div class="col-lg-1">
+                <a href="{{url_for('home')}}">Home</a>
+            </div>
+            <div class="col-lg-1">
+                <a href="{{url_for('authors')}}">Authors</a>
+            </div>
+            <div class="col-lg-1">
+                <a href="{{url_for('books')}}">Books</a>
+            </div>
             <div class="col-lg-1">
                 <a href="{{url_for('logout')}}">Log Out</a>
             </div>

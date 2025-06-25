@@ -2,10 +2,13 @@
 
 {% block content %}
     <h1>Hi, {{current_user.username}}!</h1>
-    <p>You have the following role: {{current_user.role}}</p>
+    <p>You have the '{{current_user.role}}' role
     {% if current_user.role == 'Admin' %}
-    <p>You will be able to create, read, update, and delete data.</p>
+    and will be able to create, read, update, and delete data.</p>
     {% else %}
-    <p>You will be able to create, read and update data.</p>
+    and will be able to create, read and update data.</p>
     {% endif %}
+
+    <a class="btn btn-primary" href="{{url_for('authors')}}">Authors</a>
+    <a class="btn btn-primary" href="{{url_for('books')}}">Books</a>
 {% endblock %}

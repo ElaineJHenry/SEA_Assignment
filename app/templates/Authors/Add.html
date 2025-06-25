@@ -1,0 +1,27 @@
+{% extends "Base.html" %}
+
+{% block content %}
+<form method="post" action="/add_author">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-4 mt-5">
+            {{form.hidden_tag()}}
+            {{form.name.label}}
+            {% for error in form.name.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+            {{form.name(class_="form-control mb-3")}}
+
+            {{form.age.label}}
+            {% for error in form.age.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+            {{form.age(class_="form-control mb-3")}}
+        </div>
+    </div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-2 text-center">
+        {{form.submit(class_="btn btn-primary w-100 mb-2")}}
+    </div>
+</div>
+</form>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "Base.html" %}
+
+{% block content %}
+    <h1>Author Details</h1>
+    <hr>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group mb-1">
+                <label for="authorName" class="col-lg-4">Name</label>
+                <input id="authorName" class="form-control col-lg-8" value="{{author.name}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="authorAge" class="col-lg-4">Age</label>
+                <input id="authorAge" class="form-control col-lg-8" value="{{author.age}}" readonly>
+            </div>
+        </div>
+    </div>
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Book Name</th>
+                <th>Release Date</th>
+                <th>Genre</th>
+                <th>Pages</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{book.name}}</td>
+                <td>{{book.release_date}}</td>
+                <td>{{book.genre}}</td>
+                <td>{{book.pages}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a class="btn btn-primary" href="{{url_for('authors')}}">Back</a>
+{% endblock %}
